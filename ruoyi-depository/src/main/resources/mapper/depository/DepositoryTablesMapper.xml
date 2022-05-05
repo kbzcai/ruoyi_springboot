@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.depository.mapper.DepositoryTablesMapper">
+    
+    <resultMap type="DepositoryTables" id="DepositoryTablesResult">
+        <result property="depositoryId"    column="depository_id"    />
+        <result property="depositoryName"    column="depository_name"    />
+        <result property="depositoryAddress"    column="depository_address"    />
+        <result property="depositoryOwnerId"    column="depository_owner_id"    />
+    </resultMap>
+
+    <sql id="selectDepositoryTablesVo">
+        select depository_id, depository_name, depository_address, depository_owner_id from depository_tables
+    </sql>
+
+    <select id="selectDepositoryTablesList" parameterType="DepositoryTables" resultMap="DepositoryTablesResult">
+        <include refid="selectDepositoryTablesVo"/>
+        <where>  
+            <if test="depositoryName != null  and depositoryName != ''"> and depository_name like concat('%', #{depositoryName}, '%')</if>
+            <if test="depositoryAddress != null  and depositoryAddress != ''"> and depository_address = #{depositoryAddress}</if>
+            <if test="depositoryOwnerId != null "> and depository_owner_id = #{depositoryOwnerId}</if>
+        </where>
+    </select>
+    
+    <select id="selectDepositoryTablesByDepositoryId" parameterType="Long" resultMap="DepositoryTablesResult">
+        <include refid="selectDepositoryTablesVo"/>
+        where depository_id = #{depositoryId}
+    </select>
+        
+    <insert id="insertDepositoryTables" parameterType="DepositoryTables" useGeneratedKeys="true" keyProperty="depositoryId">
+        insert into depository_tables
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="depositoryName != null and depositoryName != ''">depository_name,</if>
+            <if test="depositoryAddress != null">depository_address,</if>
+            <if test="depositoryOwnerId != null">depository_owner_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="depositoryName != null and depositoryName != ''">#{depositoryName},</if>
+            <if test="depositoryAddress != null">#{depositoryAddress},</if>
+            <if test="depositoryOwnerId != null">#{depositoryOwnerId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDepositoryTables" parameterType="DepositoryTables">
+        update depository_tables
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="depositoryName != null and depositoryName != ''">depository_name = #{depositoryName},</if>
+            <if test="depositoryAddress != null">depository_address = #{depositoryAddress},</if>
+            <if test="depositoryOwnerId != null">depository_owner_id = #{depositoryOwnerId},</if>
+        </trim>
+        where depository_id = #{depositoryId}
+    </update>
+
+    <delete id="deleteDepositoryTablesByDepositoryId" parameterType="Long">
+        delete from depository_tables where depository_id = #{depositoryId}
+    </delete>
+
+    <delete id="deleteDepositoryTablesByDepositoryIds" parameterType="String">
+        delete from depository_tables where depository_id in 
+        <foreach item="depositoryId" collection="array" open="(" separator="," close=")">
+            #{depositoryId}
+        </foreach>
+    </delete>
+</mapper>

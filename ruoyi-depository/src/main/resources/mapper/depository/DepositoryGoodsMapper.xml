@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.depository.mapper.DepositoryGoodsMapper">
+    
+    <resultMap type="DepositoryGoods" id="DepositoryGoodsResult">
+        <result property="goodsId"    column="goods_id"    />
+        <result property="depositoryId"    column="depository_id"    />
+        <result property="cateId"    column="cate_id"    />
+        <result property="extendCateId"    column="extend_cate_id"    />
+    </resultMap>
+
+    <sql id="selectDepositoryGoodsVo">
+        select goods_id, depository_id, cate_id, extend_cate_id from depository_goods
+    </sql>
+
+    <select id="selectDepositoryGoodsList" parameterType="DepositoryGoods" resultMap="DepositoryGoodsResult">
+        <include refid="selectDepositoryGoodsVo"/>
+        <where>  
+            <if test="goodsId != null "> and goods_id = #{goodsId}</if>
+            <if test="depositoryId != null "> and depository_id = #{depositoryId}</if>
+            <if test="cateId != null "> and cate_id = #{cateId}</if>
+            <if test="extendCateId != null "> and extend_cate_id = #{extendCateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectDepositoryGoodsByGoodsId" parameterType="Long" resultMap="DepositoryGoodsResult">
+        <include refid="selectDepositoryGoodsVo"/>
+        where goods_id = #{goodsId}
+    </select>
+        
+    <insert id="insertDepositoryGoods" parameterType="DepositoryGoods" useGeneratedKeys="true" keyProperty="goodsId">
+        insert into depository_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="depositoryId != null">depository_id,</if>
+            <if test="cateId != null">cate_id,</if>
+            <if test="extendCateId != null">extend_cate_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="depositoryId != null">#{depositoryId},</if>
+            <if test="cateId != null">#{cateId},</if>
+            <if test="extendCateId != null">#{extendCateId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDepositoryGoods" parameterType="DepositoryGoods">
+        update depository_goods
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="depositoryId != null">depository_id = #{depositoryId},</if>
+            <if test="cateId != null">cate_id = #{cateId},</if>
+            <if test="extendCateId != null">extend_cate_id = #{extendCateId},</if>
+        </trim>
+        where goods_id = #{goodsId}
+    </update>
+
+    <delete id="deleteDepositoryGoodsByGoodsId" parameterType="Long">
+        delete from depository_goods where goods_id = #{goodsId}
+    </delete>
+
+    <delete id="deleteDepositoryGoodsByGoodsIds" parameterType="String">
+        delete from depository_goods where goods_id in 
+        <foreach item="goodsId" collection="array" open="(" separator="," close=")">
+            #{goodsId}
+        </foreach>
+    </delete>
+</mapper>
