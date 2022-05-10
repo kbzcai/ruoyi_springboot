@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.plan.mapper.MesPrimaryProducePlanMapper">
+
+    <resultMap type="MesPrimaryProducePlan" id="MesPrimaryProducePlanResult">
+        <result property="id"    column="id"    />
+        <result property="productNo"    column="product_no"    />
+        <result property="orderNo"    column="order_no"    />
+        <result property="planNo"    column="plan_no"    />
+        <result property="planDate"    column="plan_date"    />
+        <result property="planSchedule"    column="plan_schedule"    />
+        <result property="planNum"    column="plan_num"    />
+        <result property="actualNum"    column="actual_num"    />
+        <result property="passNum"    column="pass_num"    />
+        <result property="weldingFinishNum"    column="welding_finish_num"    />
+        <result property="failNum"    column="fail_num"    />
+        <result property="planStatus"    column="plan_status"    />
+        <result property="productBom"    column="product_bom"    />
+        <result property="bomImport"    column="bom_import"    />
+        <result property="orderSort"    column="order_sort"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createUser"    column="create_user"    />
+        <result property="modifyUser"    column="modify_user"    />
+        <result property="modifyTime"    column="modify_time"    />
+    </resultMap>
+
+    <sql id="selectMesPrimaryProducePlanVo">
+        select id, product_no, order_no, plan_no, plan_date, plan_schedule, plan_num, actual_num, pass_num, welding_finish_num, fail_num, plan_status, product_bom, bom_import, order_sort, status, create_time, create_user, modify_user, modify_time from mes_primary_produce_plan
+    </sql>
+
+    <select id="selectMesPrimaryProducePlanList" parameterType="MesPrimaryProducePlan" resultMap="MesPrimaryProducePlanResult">
+        <include refid="selectMesPrimaryProducePlanVo"/>
+        <where>
+            <if test="productNo != null  and productNo != ''"> and product_no like concat('%', #{productNo}, '%')</if>
+            <if test="planNo != null  and planNo != ''"> and plan_no like concat('%', #{planNo}, '%')</if>
+            <if test="params.beginPlanDate != null and params.beginPlanDate != '' and params.endPlanDate != null and params.endPlanDate != ''"> and plan_date between #{params.beginPlanDate} and #{params.endPlanDate}</if>
+            <if test="planSchedule != null  and planSchedule != ''"> and plan_schedule = #{planSchedule}</if>
+        </where>
+    </select>
+
+    <select id="selectMesPrimaryProducePlanById" parameterType="Long" resultMap="MesPrimaryProducePlanResult">
+        <include refid="selectMesPrimaryProducePlanVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMesPrimaryProducePlan" parameterType="MesPrimaryProducePlan">
+        insert into mes_primary_produce_plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="productNo != null">product_no,</if>
+            <if test="orderNo != null">order_no,</if>
+            <if test="planNo != null">plan_no,</if>
+            <if test="planDate != null">plan_date,</if>
+            <if test="planSchedule != null">plan_schedule,</if>
+            <if test="planNum != null">plan_num,</if>
+            <if test="actualNum != null">actual_num,</if>
+            <if test="passNum != null">pass_num,</if>
+            <if test="weldingFinishNum != null">welding_finish_num,</if>
+            <if test="failNum != null">fail_num,</if>
+            <if test="planStatus != null">plan_status,</if>
+            <if test="productBom != null">product_bom,</if>
+            <if test="bomImport != null">bom_import,</if>
+            <if test="orderSort != null">order_sort,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createUser != null">create_user,</if>
+            <if test="modifyUser != null">modify_user,</if>
+            <if test="modifyTime != null">modify_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="productNo != null">#{productNo},</if>
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="planNo != null">#{planNo},</if>
+            <if test="planDate != null">#{planDate},</if>
+            <if test="planSchedule != null">#{planSchedule},</if>
+            <if test="planNum != null">#{planNum},</if>
+            <if test="actualNum != null">#{actualNum},</if>
+            <if test="passNum != null">#{passNum},</if>
+            <if test="weldingFinishNum != null">#{weldingFinishNum},</if>
+            <if test="failNum != null">#{failNum},</if>
+            <if test="planStatus != null">#{planStatus},</if>
+            <if test="productBom != null">#{productBom},</if>
+            <if test="bomImport != null">#{bomImport},</if>
+            <if test="orderSort != null">#{orderSort},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createUser != null">#{createUser},</if>
+            <if test="modifyUser != null">#{modifyUser},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMesPrimaryProducePlan" parameterType="MesPrimaryProducePlan">
+        update mes_primary_produce_plan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productNo != null">product_no = #{productNo},</if>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="planNo != null">plan_no = #{planNo},</if>
+            <if test="planDate != null">plan_date = #{planDate},</if>
+            <if test="planSchedule != null">plan_schedule = #{planSchedule},</if>
+            <if test="planNum != null">plan_num = #{planNum},</if>
+            <if test="actualNum != null">actual_num = #{actualNum},</if>
+            <if test="passNum != null">pass_num = #{passNum},</if>
+            <if test="weldingFinishNum != null">welding_finish_num = #{weldingFinishNum},</if>
+            <if test="failNum != null">fail_num = #{failNum},</if>
+            <if test="planStatus != null">plan_status = #{planStatus},</if>
+            <if test="productBom != null">product_bom = #{productBom},</if>
+            <if test="bomImport != null">bom_import = #{bomImport},</if>
+            <if test="orderSort != null">order_sort = #{orderSort},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createUser != null">create_user = #{createUser},</if>
+            <if test="modifyUser != null">modify_user = #{modifyUser},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMesPrimaryProducePlanById" parameterType="Long">
+        delete from mes_primary_produce_plan where id = #{id}
+    </delete>
+
+    <delete id="deleteMesPrimaryProducePlanByIds" parameterType="String">
+        delete from mes_primary_produce_plan where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
