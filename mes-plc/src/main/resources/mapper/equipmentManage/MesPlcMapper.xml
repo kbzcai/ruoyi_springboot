@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.plc.mapper.MesPlcMapper">
+
+    <resultMap type="MesPlc" id="MesPlcResult">
+        <result property="id"    column="id"    />
+        <result property="productType"    column="product_type"    />
+        <result property="r1EquipmentStatus"    column="r1_equipment_status"    />
+        <result property="r2EquipmentStatus"    column="r2_equipment_status"    />
+        <result property="failCode"    column="fail_code"    />
+        <result property="prodNum"    column="prod_num"    />
+        <result property="r1RobNo"    column="r1_rob_no"    />
+        <result property="r1WeldLineNo"    column="r1_weld_line_no"    />
+        <result property="r1Electric"    column="r1_electric"    />
+        <result property="r1Voltage"    column="r1_voltage"    />
+        <result property="r1Speed"    column="r1_speed"    />
+        <result property="r1Job"    column="r1_job"    />
+        <result property="r2RobNo"    column="r2_rob_no"    />
+        <result property="r2WeldLineNo"    column="r2_weld_line_no"    />
+        <result property="r2Electric"    column="r2_electric"    />
+        <result property="r2Voltage"    column="r2_voltage"    />
+        <result property="r2Speed"    column="r2_speed"    />
+        <result property="r2Job"    column="r2_job"    />
+        <result property="replaceStatus"    column="replace_status"    />
+        <result property="r1ProtectiveGas"    column="r1_protective_gas"    />
+        <result property="r2ProtectiveGas"    column="r2_protective_gas"    />
+        <result property="r1WeldingWire"    column="r1_welding_wire"    />
+        <result property="r2WeldingWire"    column="r2_welding_wire"    />
+        <result property="loginId"    column="login_id"    />
+        <result property="loginPassword"    column="login_password"    />
+        <result property="partStatus"    column="part_status"    />
+        <result property="recerve"    column="recerve"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="productType2"    column="product_type2"    />
+        <result property="prodNumb"    column="prod_numB"    />
+        <result property="qualifed"    column="qualifed"    />
+        <result property="unaccepted"    column="unaccepted"    />
+        <result property="switchBut"    column="switch_but"    />
+        <result property="player"    column="player"    />
+        <result property="plcNumber"    column="plc_number"    />
+    </resultMap>
+
+    <sql id="selectMesPlcVo">
+        select id, product_type, r1_equipment_status, r2_equipment_status, fail_code, prod_num, r1_rob_no, r1_weld_line_no, r1_electric, r1_voltage, r1_speed, r1_job, r2_rob_no, r2_weld_line_no, r2_electric, r2_voltage, r2_speed, r2_job, replace_status, r1_protective_gas, r2_protective_gas, r1_welding_wire, r2_welding_wire, login_id, login_password, part_status, recerve, create_time, product_type2, prod_numB, qualifed, unaccepted, switch_but, player, plc_number from mes_plc
+    </sql>
+
+    <select id="selectMesPlcList" parameterType="MesPlc" resultMap="MesPlcResult">
+        <include refid="selectMesPlcVo"/>
+        <where>
+            <if test="plcNumber != null "> and plc_number = #{plcNumber}</if>
+        </where>
+    </select>
+
+    <select id="getNumData" parameterType="Integer" resultMap="MesPlcResult">
+        <include refid="selectMesPlcVo"/>
+          where plc_number = #{plcNumber} order by create_time desc LIMIT 1
+    </select>
+
+    <select id="selectMesPlcById" parameterType="Long" resultMap="MesPlcResult">
+        <include refid="selectMesPlcVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertMesPlc" parameterType="MesPlc" useGeneratedKeys="true" keyProperty="id">
+        insert into mes_plc
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productType != null">product_type,</if>
+            <if test="r1EquipmentStatus != null">r1_equipment_status,</if>
+            <if test="r2EquipmentStatus != null">r2_equipment_status,</if>
+            <if test="failCode != null">fail_code,</if>
+            <if test="prodNum != null">prod_num,</if>
+            <if test="r1RobNo != null">r1_rob_no,</if>
+            <if test="r1WeldLineNo != null">r1_weld_line_no,</if>
+            <if test="r1Electric != null">r1_electric,</if>
+            <if test="r1Voltage != null">r1_voltage,</if>
+            <if test="r1Speed != null">r1_speed,</if>
+            <if test="r1Job != null">r1_job,</if>
+            <if test="r2RobNo != null">r2_rob_no,</if>
+            <if test="r2WeldLineNo != null">r2_weld_line_no,</if>
+            <if test="r2Electric != null">r2_electric,</if>
+            <if test="r2Voltage != null">r2_voltage,</if>
+            <if test="r2Speed != null">r2_speed,</if>
+            <if test="r2Job != null">r2_job,</if>
+            <if test="replaceStatus != null">replace_status,</if>
+            <if test="r1ProtectiveGas != null">r1_protective_gas,</if>
+            <if test="r2ProtectiveGas != null">r2_protective_gas,</if>
+            <if test="r1WeldingWire != null">r1_welding_wire,</if>
+            <if test="r2WeldingWire != null">r2_welding_wire,</if>
+            <if test="loginId != null">login_id,</if>
+            <if test="loginPassword != null">login_password,</if>
+            <if test="partStatus != null">part_status,</if>
+            <if test="recerve != null">recerve,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="productType2 != null">product_type2,</if>
+            <if test="prodNumb != null">prod_numB,</if>
+            <if test="qualifed != null">qualifed,</if>
+            <if test="unaccepted != null">unaccepted,</if>
+            <if test="switchBut != null">switch_but,</if>
+            <if test="player != null">player,</if>
+            <if test="plcNumber != null">plc_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productType != null">#{productType},</if>
+            <if test="r1EquipmentStatus != null">#{r1EquipmentStatus},</if>
+            <if test="r2EquipmentStatus != null">#{r2EquipmentStatus},</if>
+            <if test="failCode != null">#{failCode},</if>
+            <if test="prodNum != null">#{prodNum},</if>
+            <if test="r1RobNo != null">#{r1RobNo},</if>
+            <if test="r1WeldLineNo != null">#{r1WeldLineNo},</if>
+            <if test="r1Electric != null">#{r1Electric},</if>
+            <if test="r1Voltage != null">#{r1Voltage},</if>
+            <if test="r1Speed != null">#{r1Speed},</if>
+            <if test="r1Job != null">#{r1Job},</if>
+            <if test="r2RobNo != null">#{r2RobNo},</if>
+            <if test="r2WeldLineNo != null">#{r2WeldLineNo},</if>
+            <if test="r2Electric != null">#{r2Electric},</if>
+            <if test="r2Voltage != null">#{r2Voltage},</if>
+            <if test="r2Speed != null">#{r2Speed},</if>
+            <if test="r2Job != null">#{r2Job},</if>
+            <if test="replaceStatus != null">#{replaceStatus},</if>
+            <if test="r1ProtectiveGas != null">#{r1ProtectiveGas},</if>
+            <if test="r2ProtectiveGas != null">#{r2ProtectiveGas},</if>
+            <if test="r1WeldingWire != null">#{r1WeldingWire},</if>
+            <if test="r2WeldingWire != null">#{r2WeldingWire},</if>
+            <if test="loginId != null">#{loginId},</if>
+            <if test="loginPassword != null">#{loginPassword},</if>
+            <if test="partStatus != null">#{partStatus},</if>
+            <if test="recerve != null">#{recerve},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="productType2 != null">#{productType2},</if>
+            <if test="prodNumb != null">#{prodNumb},</if>
+            <if test="qualifed != null">#{qualifed},</if>
+            <if test="unaccepted != null">#{unaccepted},</if>
+            <if test="switchBut != null">#{switchBut},</if>
+            <if test="player != null">#{player},</if>
+            <if test="plcNumber != null">#{plcNumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMesPlc" parameterType="MesPlc">
+        update mes_plc
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productType != null">product_type = #{productType},</if>
+            <if test="r1EquipmentStatus != null">r1_equipment_status = #{r1EquipmentStatus},</if>
+            <if test="r2EquipmentStatus != null">r2_equipment_status = #{r2EquipmentStatus},</if>
+            <if test="failCode != null">fail_code = #{failCode},</if>
+            <if test="prodNum != null">prod_num = #{prodNum},</if>
+            <if test="r1RobNo != null">r1_rob_no = #{r1RobNo},</if>
+            <if test="r1WeldLineNo != null">r1_weld_line_no = #{r1WeldLineNo},</if>
+            <if test="r1Electric != null">r1_electric = #{r1Electric},</if>
+            <if test="r1Voltage != null">r1_voltage = #{r1Voltage},</if>
+            <if test="r1Speed != null">r1_speed = #{r1Speed},</if>
+            <if test="r1Job != null">r1_job = #{r1Job},</if>
+            <if test="r2RobNo != null">r2_rob_no = #{r2RobNo},</if>
+            <if test="r2WeldLineNo != null">r2_weld_line_no = #{r2WeldLineNo},</if>
+            <if test="r2Electric != null">r2_electric = #{r2Electric},</if>
+            <if test="r2Voltage != null">r2_voltage = #{r2Voltage},</if>
+            <if test="r2Speed != null">r2_speed = #{r2Speed},</if>
+            <if test="r2Job != null">r2_job = #{r2Job},</if>
+            <if test="replaceStatus != null">replace_status = #{replaceStatus},</if>
+            <if test="r1ProtectiveGas != null">r1_protective_gas = #{r1ProtectiveGas},</if>
+            <if test="r2ProtectiveGas != null">r2_protective_gas = #{r2ProtectiveGas},</if>
+            <if test="r1WeldingWire != null">r1_welding_wire = #{r1WeldingWire},</if>
+            <if test="r2WeldingWire != null">r2_welding_wire = #{r2WeldingWire},</if>
+            <if test="loginId != null">login_id = #{loginId},</if>
+            <if test="loginPassword != null">login_password = #{loginPassword},</if>
+            <if test="partStatus != null">part_status = #{partStatus},</if>
+            <if test="recerve != null">recerve = #{recerve},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="productType2 != null">product_type2 = #{productType2},</if>
+            <if test="prodNumb != null">prod_numB = #{prodNumb},</if>
+            <if test="qualifed != null">qualifed = #{qualifed},</if>
+            <if test="unaccepted != null">unaccepted = #{unaccepted},</if>
+            <if test="switchBut != null">switch_but = #{switchBut},</if>
+            <if test="player != null">player = #{player},</if>
+            <if test="plcNumber != null">plc_number = #{plcNumber},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMesPlcById" parameterType="Long">
+        delete from mes_plc where id = #{id}
+    </delete>
+
+    <delete id="deleteMesPlcByIds" parameterType="String">
+        delete from mes_plc where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
